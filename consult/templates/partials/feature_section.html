@@ -1,0 +1,50 @@
+{% load static %}
+
+<!-- Features Start -->
+<div class="container-fluid py-6 px-5">
+    <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+        <h1 class="display-5 mb-0">Why Choose Us!!!</h1>
+        <hr class="w-25 mx-auto bg-primary">
+    </div>
+
+    <div class="row g-5">
+        <div class="col-lg-4">
+            <div class="row g-5">
+                {% for feature in features|slice:":3" %}
+                <div class="col-12">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="{{ feature.icon }} fs-4 text-white"></i>
+                    </div>
+                    <h3>{{ feature.title }}</h3>
+                    <p class="mb-0">{{ feature.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="d-block bg-primary h-100 text-center">
+                <img class="img-fluid" src="{% static 'img/feature.jpg' %}" alt="">
+                <div class="p-4">
+                    <p class="text-white mb-4">Clita nonumy sanctus nonumy et clita tempor...</p>
+                    <a href="" class="btn btn-light py-md-3 px-md-5 rounded-pill mb-2">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="row g-5">
+                {% for feature in features|slice:"3:" %}
+                <div class="col-12">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="{{ feature.icon }} fs-4 text-white"></i>
+                    </div>
+                    <h3>{{ feature.title }}</h3>
+                    <p class="mb-0">{{ feature.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Features End -->

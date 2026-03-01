@@ -1,0 +1,32 @@
+{% load static %}
+
+<!-- Services Start -->
+<div class="container-fluid py-6 px-5">
+    <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+        <h1 class="display-5 mb-0">What We Offer</h1>
+        <hr class="w-25 mx-auto bg-primary">
+    </div>
+
+    <div class="row g-5">
+        {% for service in services %}
+        <div class="col-lg-4 col-md-6">
+            <div class="service-item bg-secondary text-center px-5">
+                <!-- Optional icon placeholder — you can add icon field later -->
+                <div class="d-flex align-items-center justify-content-center bg-primary text-white rounded-circle mx-auto mb-4" style="width: 90px; height: 90px;">
+                <i class="fa {{service.service_icon}} fa-2x"></i>
+                </div>
+
+                <h3 class="mb-3">{{ service.service_title }}</h3>
+                <p class="mb-0">{{ service.service_desc }}</p>
+
+                {% if service.service_read_link %}
+                <a href="{{ service.service_read_link }}" class="btn btn-primary mt-3">Read More</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No services available yet. Please add some in the admin panel.</p>
+        {% endfor %}
+    </div>
+</div>
+<!-- Services End -->

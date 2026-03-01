@@ -1,0 +1,101 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-dark p-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-4 text-white">Rest-API</h1>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="far fa-square text-primary px-2"></i>
+            <a href="{% url 'tax_advice_api' %}">Rest-API</a>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container py-5">
+    <h1 class="display-5 mb-4 text-center">Tax Consultancy API</h1>
+    <hr class="w-25 mx-auto bg-primary mb-5">
+
+    <!-- Intro Section -->
+    <div class="mb-5">
+        <h3>What is this?</h3>
+        <p>
+            This page uses a custom <strong>Tax Consultancy API</strong> built in Django.
+            The API returns JSON-based tax tips for different categories like
+            <strong>Income Tax</strong>, <strong>GST</strong>, <strong>Investment & Savings</strong>, and <strong>Business Tax</strong>.
+        </p>
+        <p>
+            You (or other apps) can consume the API at:
+        </p>
+        <pre class="bg-dark text-white p-3 rounded">
+GET /restapi/api/tax-advice/
+GET /restapi/api/tax-advice/?category=income_tax
+GET /restapi/api/tax-advice/?category=gst
+GET /restapi/api/tax-advice/?category=investment
+GET /restapi/api/tax-advice/?category=business_tax
+        </pre>
+    </div>
+
+    <!-- Latest Tips from DB -->
+    <div class="mb-5">
+        <h3 class="mb-3">Latest Tax Tips</h3>
+
+        {% if latest_tips %}
+            <div class="row g-4">
+                {% for tip in latest_tips %}
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ tip.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{ tip.get_category_display }} • {{ tip.country }}
+                            </h6>
+                            <p class="card-text">
+                                {{ tip.short_tip }}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                Added on {{ tip.created_at|date:"M d, Y H:i" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No tax advice added yet. Please add some from the admin panel.</p>
+        {% endif %}
+    </div>
+
+    <!-- Example Usage Section -->
+    <div class="mb-5">
+        <h3>How to use this API?</h3>
+        <p>You can use tools like <strong>Postman</strong> or your browser to check the JSON output.</p>
+        <ul>
+            <li>
+                All tips: 
+                <code>http://127.0.0.1:8000/restapi/api/tax-advice/</code>
+            </li>
+            <li>
+                Only Income Tax: 
+                <code>http://127.0.0.1:8000/restapi/api/tax-advice/?category=income_tax</code>
+            </li>
+            <li>
+                Only GST: 
+                <code>http://127.0.0.1:8000/restapi/api/tax-advice/?category=gst</code>
+            </li>
+        </ul>
+        <p>
+            This shows that your consultancy website provides
+            <strong>its own REST-style API</strong> for tax-related guidance.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

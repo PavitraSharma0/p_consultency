@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<meta http-equiv="refresh" content="300">
+{% endblock %}
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="text-center mb-5">Consultancy Tools Dashboard</h1>
+
+    <!-- ========== 1) CURRENCY SECTION ========== -->
+    <div class="card mb-5">
+        <div class="card-header bg-primary text-white">
+            <h3>Financial Consultancy — Currency Exchange</h3>
+        </div>
+
+        <div class="card-body">
+
+            {% if currency.error %}
+                <p>{{ currency.error }}</p>
+            {% else %}
+        
+                <p><strong>Base:</strong> {{ currency.base }}</p>
+                <p><strong>Date:</strong> {{ currency.date }}</p>
+
+                <hr>
+
+                <h5>Top Currency Rates</h5>
+                <ul>
+                    {% for cur, val in currency.rates.items %}
+                        <li><strong>{{ cur }}:</strong> {{ val }}</li>
+                    {% endfor %}
+                </ul>
+
+                <hr>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

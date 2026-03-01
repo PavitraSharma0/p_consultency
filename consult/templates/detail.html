@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-dark p-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-4 text-white">Blog Detail</h1>
+            <a href="{% url 'home' %}">Home</a>
+            <i class="far fa-square text-primary px-2"></i>
+            <a href="{% url 'blog' %}">Blog</a>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Blog Detail Start -->
+<div class="container-fluid py-6 px-5">
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <!-- Blog Content Start -->
+            <div class="mb-5">
+                <img class="img-fluid w-100 mb-4" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                <h1 class="mb-3">{{ blog.title }}</h1>
+                <div class="d-flex mb-3 text-muted">
+                    <small class="me-4">
+                        <i class="bi bi-person me-2"></i>{{ blog.author }}
+                    </small>
+                    <small class="me-4">
+                        <i class="bi bi-bookmarks me-2"></i>{{ blog.category }}
+                    </small>
+                    <small>
+                        <i class="bi bi-clock me-2"></i>{{ blog.date|date:"M d, Y H:i" }}
+                    </small>
+                </div>
+                <p class="text-muted">{{ blog.content|linebreaks }}</p>
+            </div>
+            <!-- Blog Content End -->
+
+            <!-- Comments Section Start -->
+            <div class="bg-light p-5 rounded mb-5">
+                <h3 class="mb-4">Comments ({{ comments.count }})</h3>
+                {% for comment in comments %}
+                <div class="border rounded p-3 mb-3 bg-white">
+                    <h5 class="mb-1">{{ comment.name }}</h5>
+                    <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+                    <p class="mt-2 mb-0">{{ comment.content }}</p>
+                </div>
+                {% empty %}
+                <p class="text-muted">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+            </div>
+            <!-- Comments Section End -->
+
+            <!-- Comment Form Start -->
+            <div class="bg-secondary p-5 rounded">
+                <h3 class="mb-4">Leave a Comment</h3>
+                
+                {% if messages %}
+                 {% for message in messages %}
+                  <div class="alert alert-success alert-dismissible fade show" role="'alert">
+                   {{ message }}
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                   </div>
+                   {% endfor %}
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-6">
+                            {{ form.name }}
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            {{ form.email }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.content }}
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">Submit Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Comment Form End -->
+        </div>
+
+        <!-- Sidebar Start -->
+        <div class="col-lg-4">
+            <!-- Recent Posts Start -->
+            <div class="mb-5">
+                <h2 class="mb-4">Recent Posts</h2>
+                {% for recent in recent_blogs %}
+                <div class="d-flex mb-3">
+                    <img class="img-fluid" src="{{ recent.image.url }}" style="width: 100px; height: 100px; object-fit: cover;" alt="{{ recent.title }}">
+                    <a href="{% url 'blog_detail' recent.id %}" class="h6 d-flex align-items-center bg-secondary px-3 mb-0">
+                        {{ recent.title|truncatewords:8 }}
+                    </a>
+                </div>
+                {% empty %}
+                <p class="text-muted">No recent posts yet.</p>
+                {% endfor %}
+            </div>
+            <!-- Recent Posts End -->
+
+            <!-- Categories Start -->
+            <div class="mb-5">
+                <h2 class="mb-4">Categories</h2>
+                <div class="d-flex flex-column justify-content-start bg-secondary p-4">
+                    {% for cat in categories %}
+                    <a class="h6 mb-2" href="#">
+                        <i class="bi bi-arrow-right text-primary me-2"></i>{{ cat }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Categories End -->
+        </div>
+        <!-- Sidebar End -->
+    </div>
+</div>
+<!-- Blog Detail End -->
+
+{% endblock %}

@@ -1,0 +1,5 @@
+ <form method="POST" action="{% url 'quote' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary w-100 h-100" type="submit">Request A Quote</button>
+</form>
