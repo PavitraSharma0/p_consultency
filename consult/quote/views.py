@@ -10,7 +10,10 @@ def quote_view(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
-            message = form.save()
+            try:
+                message = form.save()
+            except Exception:
+                message = form.save(commit=False)
 
             send_mail(
                 subject=f"New Quote Request from {message.fullname}",

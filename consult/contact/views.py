@@ -8,7 +8,10 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES)
         if form.is_valid():
-            message = form.save()  
+            try:
+                message = form.save()
+            except Exception:
+                message = form.save(commit=False)
             
             send_mail(
                 subject=f"New Contact Message from {message.fullname}",

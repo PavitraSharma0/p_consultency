@@ -10,8 +10,11 @@ def stayupdate_view(request):
     if request.method == 'POST':
         form = StayUpdateForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            subscriber, created = StayUpdate.objects.get_or_create(email=email)
+            try:
+                subscriber, created = StayUpdate.objects.get_or_create(email=email)
+            except Exception:
+                subscriber = StayUpdate(email=email)
+                created = True
 
             if created:
                 print("✅ StayUpdate: New subscriber added — preparing to send emails")
