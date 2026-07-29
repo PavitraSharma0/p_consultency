@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.contrib import messages
 from .forms import QuoteForm
 
 # Create your views here.
@@ -44,6 +45,7 @@ def quote_view(request):
             email.attach_alternative(html_content, "text/html")
             email.send()
 
+            messages.success(request, "Thank you! Your quote request has been sent successfully.")
             return redirect('quote')
     else:
         form = QuoteForm()

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.contrib import messages
 from .forms import ContactForm
 
 def contact_view(request):
@@ -44,6 +45,7 @@ def contact_view(request):
             email.attach_alternative(html_content, "text/html")
             email.send()
 
+            messages.success(request, "Thank you! Your message has been sent successfully.")
             return redirect('contact')
     else:
         form = ContactForm()
