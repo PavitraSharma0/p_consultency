@@ -1,0 +1,8 @@
+*.pyc
+__pycache__/
+venv/
+.venv/
+staticfiles_build/
+db.sqlite3
+.env
+.vercel
